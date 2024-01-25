@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const authorization_1 = require("../../middleware/authorization");
+const deleteEvent_1 = require("../../controllers/adminControllers/deleteEvent");
+const blockedEvent_1 = require("../../controllers/adminControllers/blockedEvent");
+const unblockEvent_1 = require("../../controllers/adminControllers/unblockEvent");
+const getComments_1 = require("../../controllers/adminControllers/getComments");
+const registerAdmin_1 = require("../../controllers/adminControllers/registerAdmin");
+const getFlaggedEvents_1 = require("../../controllers/adminControllers/getFlaggedEvents");
+const getReports_1 = require("../../controllers/adminControllers/getReports");
+const router = express_1.default.Router();
+router.delete("/deleteEvent", authorization_1.adminAuthoriser, deleteEvent_1.deleteEvents);
+router.post("/block_event/:id", authorization_1.adminAuthoriser, blockedEvent_1.eventBlocked);
+router.post("/unblock_event/:id", authorization_1.adminAuthoriser, unblockEvent_1.eventUnblocked);
+router.get("/getComments", getComments_1.getUserComments);
+router.post("/register", registerAdmin_1.registerAdmin);
+router.get("/flagged", authorization_1.adminAuthoriser, getFlaggedEvents_1.getFlaggedEvents);
+router.get("/get_reports/:id", authorization_1.adminAuthoriser, getReports_1.getEventReports);
+exports.default = router;
